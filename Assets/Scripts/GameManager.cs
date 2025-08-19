@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int gridWidth = 4;
     [SerializeField] private int gridHeight = 3;
     [SerializeField] private float cardRevealTime = 1f;
-    [SerializeField] private Sprite[] cardSprites;   // ön yüzler
-    [SerializeField] private Sprite backSprite;      // tek arka yüz
+    [SerializeField] private Sprite[] cardSprites;  
+    [SerializeField] private Sprite backSprite;     
 
     [Header("UI References")]
     [SerializeField] private Transform cardParent;
@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour
             cardIDs.Add(i);
         }
 
-        // shuffle
         for (int i = cardIDs.Count - 1; i > 0; i--)
         {
             int rand = Random.Range(0, i + 1);
@@ -139,7 +138,6 @@ public class GameManager : MonoBehaviour
         InitializeGame();
     }
 
-    // Getters
     public int GetMatchedPairs() => matchedPairs;
     public int GetTotalPairs() => totalPairs;
     public bool CanSelectCards() => canSelectCards;

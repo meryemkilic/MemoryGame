@@ -9,37 +9,32 @@ public class CardFlip : MonoBehaviour
     [SerializeField] private AnimationCurve flipCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     [Header("Images")]
-    [SerializeField] private Image frontImage;   // Prefabda atayın (Front)
-    [SerializeField] private Image backImage;    // Prefabda atayın (Back)
+    [SerializeField] private Image frontImage;   
+    [SerializeField] private Image backImage;   
 
     private bool isFlipping = false;
     private Coroutine flipCoroutine;
 
-    // === Celebration FX ===
+    
     [Header("Match Celebration")]
     [SerializeField] private float celebrateDuration = 0.35f;
     [SerializeField] private AnimationCurve celebrateCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [SerializeField] private float bounceScale = 1.15f;
 
-    [Tooltip("UI > Effects > Outline (Front image'a eklemen önerilir)")]
-    [SerializeField] private Outline glowOutline;   // opsiyonel
+    [SerializeField] private Outline glowOutline; 
     [SerializeField] private float maxGlowDistance = 6f;
 
-    [Tooltip("Shine için küçük bir Image + CanvasGroup (Front altında olabilir)")]
-    [SerializeField] private CanvasGroup shineGroup; // opsiyonel
+    [SerializeField] private CanvasGroup shineGroup;
 
     private void Awake()
     {
-        // Referanslar inspector'da boşsa isimden bulmayı dener
         if (frontImage == null)
             frontImage = transform.Find("Front")?.GetComponent<Image>();
         if (backImage == null)
             backImage = transform.Find("Back")?.GetComponent<Image>();
 
-        // Başlangıç güvenliği
         if (frontImage != null && backImage != null)
         {
-            // Başlangıçta back açık kalsın, front kapalı
             frontImage.gameObject.SetActive(false);
             backImage.gameObject.SetActive(true);
         }
@@ -56,14 +51,10 @@ public class CardFlip : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Kartı animasyonla çevirir. İsteğe bağlı sprite günceller.
-    /// </summary>
     public void FlipCard(bool showFront, Sprite frontSprite = null, Sprite backSprite = null)
     {
         if (isFlipping) return;
 
-        // Spriteları güncelle
         if (frontSprite != null && frontImage != null) frontImage.sprite = frontSprite;
         if (backSprite != null && backImage != null) backImage.sprite = backSprite;
 
@@ -78,7 +69,6 @@ public class CardFlip : MonoBehaviour
         Vector3 baseScale = transform.localScale;
         float half = flipDuration * 0.5f;
 
-        // 1) 1 -> 0 (X ekseninde)
         float t = 0f;
         while (t < half)
         {
@@ -89,11 +79,9 @@ public class CardFlip : MonoBehaviour
             yield return null;
         }
 
-        // Yüzleri değiştir
         if (frontImage != null) frontImage.gameObject.SetActive(showFront);
         if (backImage != null)  backImage.gameObject.SetActive(!showFront);
 
-        // 2) 0 -> 1 (X ekseninde)
         t = 0f;
         while (t < half)
         {
@@ -108,9 +96,6 @@ public class CardFlip : MonoBehaviour
         isFlipping = false;
     }
 
-    /// <summary>
-    /// Animasyonsuz anında ön/arka gösterimini ayarlar. (ilk kurulumda ideal)
-    /// </summary>
     public void SetCardImmediate(bool showFront, Sprite frontSprite = null, Sprite backSprite = null)
     {
         if (frontSprite != null && frontImage != null) frontImage.sprite = frontSprite;
@@ -119,20 +104,15 @@ public class CardFlip : MonoBehaviour
         if (frontImage != null) frontImage.gameObject.SetActive(showFront);
         if (backImage != null)  backImage.gameObject.SetActive(!showFront);
 
-        // olası flip kalıntısı için
         transform.localScale = Vector3.one;
         isFlipping = false;
     }
 
-    /// <summary>
-    /// Doğru eşleşmede süslü kutlama (bounce + glow + shine)
-    /// Card.SetMatched() tarafından çağrılır.
-    /// </summary>
+   
     public IEnumerator PlayMatchCelebrate()
     {
         Vector3 baseScale = transform.localScale;
 
-        // Outline başlangıcını sıfırla
         Color outlineColor = Color.white;
         if (glowOutline != null)
         {
@@ -154,11 +134,9 @@ public class CardFlip : MonoBehaviour
             t += Time.deltaTime;
             float p = celebrateCurve.Evaluate(t / celebrateDuration);
 
-            // 1) Bounce scale
             float s = Mathf.Lerp(1f, bounceScale, p);
             transform.localScale = new Vector3(s, s, s);
 
-            // 2) Glow (Outline) — ortada pik yapıp geri insin
             if (glowOutline != null)
             {
                 float half = celebrateDuration * 0.5f;
@@ -171,7 +149,6 @@ public class CardFlip : MonoBehaviour
                 glowOutline.effectDistance = new Vector2(dist, dist);
             }
 
-            // 3) Shine — hafif dön + fade in/out
             if (shineGroup != null)
             {
                 shineGroup.alpha = Mathf.SmoothStep(0f, 1f, p);
@@ -181,7 +158,6 @@ public class CardFlip : MonoBehaviour
             yield return null;
         }
 
-        // toparla
         transform.localScale = baseScale;
         if (glowOutline != null)
         {
@@ -197,10 +173,7 @@ public class CardFlip : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// (Opsiyonel) Yanlış eşleşmede ufak wiggle efekti.
-    /// </summary>
-    public IEnumerator PlayWrongWiggle(float amplitude = 6f, float duration = 0.2f, int oscillations = 2)
+      public IEnumerator PlayWrongWiggle(float amplitude = 6f, float duration = 0.2f, int oscillations = 2)
     {
         float t = 0f;
         Quaternion baseRot = transform.rotation;

@@ -28,7 +28,7 @@ public class SoundManager : MonoBehaviour
 
         sfxSource.playOnAwake = false;
         sfxSource.loop = false;
-        sfxSource.spatialBlend = 0f; // 2D
+        sfxSource.spatialBlend = 0f; 
         sfxSource.volume = 1f;
     }
 

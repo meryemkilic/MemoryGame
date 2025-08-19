@@ -97,7 +97,6 @@ public class Card : MonoBehaviour
             cardFlip.SetCardImmediate(false, frontSprite, backSprite);
     }
 
-    // Getters
     public int GetCardID() => cardID;
     public bool IsRevealed() => isRevealed;
     public bool IsMatched() => isMatched;

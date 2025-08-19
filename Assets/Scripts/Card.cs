@@ -36,7 +36,6 @@ public class Card : MonoBehaviour
     {
         if (!isInteractable || isMatched || isRevealed) return;
 
-        // Ses: click
         SoundManager.Instance?.PlayClick();
 
         RevealCard();
@@ -75,14 +74,14 @@ public class Card : MonoBehaviour
         if (cardFlip != null)
             cardFlip.FlipCard(showFront, frontSprite, backSprite);
     }
-
+/*
     public void SetInteractable(bool interactable)
     {
         isInteractable = interactable;
         if (cardButton != null)
             cardButton.interactable = interactable;
     }
-
+*/
     public void InitializeCard(int id, Sprite front, Sprite back)
     {
         cardID = id;

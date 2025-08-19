@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int gridWidth = 4;
     [SerializeField] private int gridHeight = 3;
     [SerializeField] private float cardRevealTime = 1f;
-    [SerializeField] private Sprite[] cardSprites;  
-    [SerializeField] private Sprite backSprite;     
+    [SerializeField] private Sprite[] cardSprites;
+    [SerializeField] private Sprite backSprite;
 
     [Header("UI References")]
     [SerializeField] private Transform cardParent;

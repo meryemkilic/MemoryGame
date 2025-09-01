@@ -1,4 +1,0 @@
-repository "MemGame/MemGame@18968312369280@cloud"
-  path "/"
-    br "/main"
-    co "/main"

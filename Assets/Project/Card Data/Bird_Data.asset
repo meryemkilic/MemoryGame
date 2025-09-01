@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34538ef4c0646dc459013f73d3d3ffd8, type: 3}
+  m_Name: Bird_Data
+  m_EditorClassIdentifier: 
+  cardID: 0
+  cardName: Bird
+  frontSprite: {fileID: 3326971659086699885, guid: 4554ed9821ba90e4e9c2b63c6a3ca86a, type: 3}
+  backSprite: {fileID: 8459777460899806319, guid: 1e74f9402238a944fb861ff077bc727e, type: 3}

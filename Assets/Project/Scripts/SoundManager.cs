@@ -4,13 +4,15 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
 
+    [Header("Audio Sources")]
+    // inspectordan atayacağım
+    [SerializeField] private AudioSource sfxSource;
+
     [Header("SFX Clips")]
     [SerializeField] private AudioClip clickSfx;
     [SerializeField] private AudioClip matchSfx;
     [SerializeField] private AudioClip mismatchSfx;
     [SerializeField] private AudioClip victorySfx;
-
-    private AudioSource sfxSource;
 
     private void Awake()
     {
@@ -21,24 +23,21 @@ public class SoundManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        //sound manager child object audio source ayrı ayrı ekle
-//required component attribute
-        sfxSource = GetComponent<AudioSource>();
-        if (sfxSource == null)
-            sfxSource = gameObject.AddComponent<AudioSource>();
-
-        sfxSource.playOnAwake = false;
-        sfxSource.loop = false;
-        sfxSource.spatialBlend = 0f; 
-        sfxSource.volume = 1f;
     }
-    // !!!!!
-/// <summary>
-/// playoneshot null kontrol 
-/// null check kaldır
-/// </summary>
-    public void PlayClick() { if (clickSfx != null) sfxSource.PlayOneShot(clickSfx); }
-    public void PlayMatch()    { if (matchSfx    != null) sfxSource.PlayOneShot(matchSfx); }
-    public void PlayMismatch() { if (mismatchSfx != null) sfxSource.PlayOneShot(mismatchSfx); }
-    public void PlayVictory()  { if (victorySfx  != null) sfxSource.PlayOneShot(victorySfx); }
+    public void PlayClick()
+    {
+        sfxSource.PlayOneShot(clickSfx);
+    }
+    public void PlayMatch()
+    {
+        sfxSource.PlayOneShot(matchSfx);
+    }
+    public void PlayMismatch()
+    {
+        sfxSource.PlayOneShot(mismatchSfx);
+    }
+    public void PlayVictory()
+    {
+        sfxSource.PlayOneShot(victorySfx);
+    }
 }

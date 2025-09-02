@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using DG.Tweening;
 
 
-public class GameManager : MonoBehaviour
+
+public class GameManager : SingletonBehaviour<GameManager>
 {
     [Header("Game Settings")]
     [SerializeField] private int gridWidth = 4;
@@ -24,13 +25,11 @@ public class GameManager : MonoBehaviour
     private int matchedPairs = 0;
     private bool isCheckingMatch = false;
 
-    public static GameManager Instance { get; private set; }
-    private void Awake()
-    {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-    }
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     private void Start()
     {
         InitializeGame();
@@ -132,7 +131,5 @@ public class GameManager : MonoBehaviour
         // Eğer bir eşleşme kontrolü beklemiyorsak VE henüz 2 kart seçilmediyse, oyuncu seçebilir.
         return isCheckingMatch == false && revealedCards.Count < 2;
     }
-
-
 
 }

@@ -6,7 +6,7 @@ public class Card : MonoBehaviour
 {
 
     [Header("Card Settings")]
-    [SerializeField] private int cardID;
+    private CardData cardData;
     [SerializeField] private Image frontImage;
     [SerializeField] private Image backImage;
     [SerializeField] private Button cardButton;
@@ -16,11 +16,10 @@ public class Card : MonoBehaviour
     //Card State
     private bool isRevealed = false;
     private bool isMatched = false;
-    private bool isFlipping = false;
 
     public void Initialize(CardData data)
     {
-        cardID = data.cardID;
+        this.cardData = data;
         frontImage.sprite = data.frontSprite;
         backImage.sprite = data.backSprite;
 
@@ -30,15 +29,14 @@ public class Card : MonoBehaviour
 
         isRevealed = false;
         isMatched = false;
-        isFlipping = false;
     }
 
     public void OnClicked()
     {
         if (GameManager.Instance.CanPlayerSelectCard() == false)
             return;
-            
-        if (isFlipping || isRevealed)
+
+        if (isRevealed)
             return;
 
         SoundManager.Instance.PlayClick();
@@ -54,7 +52,7 @@ public class Card : MonoBehaviour
         //buradaki if koşulunu ( if (isFlipping || isRevealed)) tamamen kaldırdım çünkü onclicked metodunda
         //bunun kontrolünü yapıyor ve ona göre reveal metodunu çağırıyorum.
 
-        isFlipping = true;
+        cardButton.interactable = false;
 
         Sequence sequence = DOTween.Sequence();
 
@@ -67,19 +65,17 @@ public class Card : MonoBehaviour
         sequence.Append(transform.DORotate(new Vector3(0, 180, 0), flipDuration / 2).SetEase(flipEase));
         sequence.OnComplete(() =>
         {
-            transform.localEulerAngles = new Vector3(0, 180, 0);
             isRevealed = true;
-            isFlipping = false;
         });
 
     }
 
     public void Hide()
     {
-        if (isFlipping || !isRevealed || isMatched)
+        if (!isRevealed || isMatched)
             return;
 
-        isFlipping = true;
+        //cardButton.interactable = false;
         isRevealed = false;
 
         Sequence sequence = DOTween.Sequence();
@@ -94,7 +90,8 @@ public class Card : MonoBehaviour
         sequence.OnComplete(() =>
         {
             transform.localEulerAngles = Vector3.zero;
-            isFlipping = false;
+            cardButton.interactable = true;
+
         });
     }
     //!!!!! SOR: card flipi buraya taşıdıktan sonra celeb için kullandığım 
@@ -103,13 +100,17 @@ public class Card : MonoBehaviour
     {
         isMatched = true;
         isRevealed = true;
+        cardButton.interactable = false;
         Sequence sequence = DOTween.Sequence();
         sequence.Append(transform.DOScale(1.15f, 0.2f).SetEase(Ease.OutQuad));
         sequence.Append(transform.DOScale(1f, 0.2f).SetEase(Ease.InQuad));
     }
 
 
-    public int GetCardID() => cardID;
+    public int GetCardID()
+    {
+        return cardData.cardID;
+    }
     public bool IsRevealed() => isRevealed;
     public bool IsMatched() => isMatched;
 }

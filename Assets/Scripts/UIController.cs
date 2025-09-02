@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class UIController : MonoBehaviour
 {
-    public void LoadGame(int index)
+    public void OnPlayButtonClicked(int index)
     {
         SceneManager.LoadScene(index);
     }

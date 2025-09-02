@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class SoundManager : MonoBehaviour
+public class SoundManager : SingletonBehaviour<SoundManager>
 {
-    public static SoundManager Instance { get; private set; }
 
     [Header("Audio Sources")]
     // inspectordan atayacağım
@@ -14,15 +13,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip mismatchSfx;
     [SerializeField] private AudioClip victorySfx;
 
-    private void Awake()
+
+    protected override void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        base.Awake();
     }
     public void PlayClick()
     {

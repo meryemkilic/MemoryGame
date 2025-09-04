@@ -49,9 +49,6 @@ public class Card : MonoBehaviour
 
     public void Reveal()
     {
-        //buradaki if koşulunu ( if (isFlipping || isRevealed)) tamamen kaldırdım çünkü onclicked metodunda
-        //bunun kontrolünü yapıyor ve ona göre reveal metodunu çağırıyorum.
-
         cardButton.interactable = false;
 
         Sequence sequence = DOTween.Sequence();
@@ -67,7 +64,6 @@ public class Card : MonoBehaviour
         {
             isRevealed = true;
         });
-
     }
 
     public void Hide()
@@ -75,7 +71,6 @@ public class Card : MonoBehaviour
         if (!isRevealed || isMatched)
             return;
 
-        //cardButton.interactable = false;
         isRevealed = false;
 
         Sequence sequence = DOTween.Sequence();
@@ -94,8 +89,7 @@ public class Card : MonoBehaviour
 
         });
     }
-    //!!!!! SOR: card flipi buraya taşıdıktan sonra celeb için kullandığım 
-    //dotween animasyonları çalışmıyor
+    
     public void SetMatched()
     {
         isMatched = true;

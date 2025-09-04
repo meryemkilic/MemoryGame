@@ -1,21 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
 using DG.Tweening;
+using System.Collections;
 
 
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
-    [Header("Game Settings")]
-    [SerializeField] private int gridWidth = 4;
-    [SerializeField] private int gridHeight = 3;
+    private int gridWidth;
+    private int gridHeight;
     [SerializeField] private float cardRevealTime = 0.75f;
-
-    [Header("Data & Prefabs")]
     [SerializeField] private CardData[] cardTypes;
     [SerializeField] private Card cardPrefab;
-
-    [Header("UI References")]
     [SerializeField] private Transform cardParent;
 
 
@@ -37,11 +33,44 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void InitializeGame()
     {
-        totalPairs = cardTypes.Length;
-        CreateCards();
+        totalPairs = (gridHeight * gridWidth) / 2;
+        CreateCards(totalPairs);
     }
 
-    private void CreateCards()
+     public void GenerateLevel(int difficulty)
+    {
+        SetDifficulty(difficulty);
+        InitializeGame();
+    }
+
+    public void SetDifficulty(int level)
+    {
+        switch (level)
+        {
+            case 1:
+                gridHeight = 2;
+                gridWidth = 2;
+                break;
+
+            case 2:
+                gridHeight = 2;
+                gridWidth = 3;
+                break;
+
+            case 3:
+                gridHeight = 2;
+                gridWidth = 4;
+                break;
+
+            default:
+                gridHeight = 2;
+                gridWidth = 2;
+                break;
+
+        }
+    }
+
+    private void CreateCards(int totalPairs)
     {
         foreach (Transform child in cardParent)
             Destroy(child.gameObject);

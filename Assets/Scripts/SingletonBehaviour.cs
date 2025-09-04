@@ -11,11 +11,11 @@ public class SingletonBehaviour<T> : MonoBehaviour where T : Component
         if (Instance == null)
         {
             Instance = this as T;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

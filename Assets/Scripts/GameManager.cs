@@ -37,13 +37,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         CreateCards(totalPairs);
     }
 
-     public void GenerateLevel(int difficulty)
-    {
-        SetDifficulty(difficulty);
-        InitializeGame();
-    }
-
-    public void SetDifficulty(int level)
+     public void GenerateLevel(int level)
     {
         switch (level)
         {
@@ -68,7 +62,11 @@ public class GameManager : SingletonBehaviour<GameManager>
                 break;
 
         }
+
+        InitializeGame();
     }
+
+    
 
     private void CreateCards(int totalPairs)
     {

@@ -3,9 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
-
-    [SerializeField] private GameObject difficultyPanel;
-
     public void OnPlayButtonClicked()
     {
         SceneManager.LoadScene("GameScene");

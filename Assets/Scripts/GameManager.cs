@@ -21,7 +21,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     private int matchedPairs = 0;
     private bool isCheckingMatch = false;
 
-
     protected override void Awake()
     {
         base.Awake();
@@ -36,38 +35,14 @@ public class GameManager : SingletonBehaviour<GameManager>
         totalPairs = (gridHeight * gridWidth) / 2;
         CreateCards(totalPairs);
     }
-
-     public void GenerateLevel(int level)
+//kodu genişletmek, level çeşitliliğini sağlamak istediğimde buradaki sabit değer ataması ile yaptığım kodu değiştireceğim
+     public void GenerateLevel(int Height,int Width)
     {
-        switch (level)
-        {
-            case 1:
-                gridHeight = 2;
-                gridWidth = 2;
-                break;
-
-            case 2:
-                gridHeight = 2;
-                gridWidth = 3;
-                break;
-
-            case 3:
-                gridHeight = 2;
-                gridWidth = 4;
-                break;
-
-            default:
-                gridHeight = 2;
-                gridWidth = 2;
-                break;
-
-        }
-
+        gridHeight = Height;
+        gridWidth = Width;
         InitializeGame();
     }
-
-    
-
+  
     private void CreateCards(int totalPairs)
     {
         foreach (Transform child in cardParent)
@@ -145,6 +120,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
         else
         {
+            //loop ile
             c1.Hide();
             c2.Hide();
             SoundManager.Instance.PlayMismatch();
@@ -155,7 +131,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public bool CanPlayerSelectCard()
     {
-        // Eğer bir eşleşme kontrolü beklemiyorsak VE henüz 2 kart seçilmediyse, oyuncu seçebilir.
+        // eğer bir eşleşme kontrolü beklemiyorsak VE henüz 2 kart seçilmediyse, oyuncu seçebilir!!!
         return isCheckingMatch == false && revealedCards.Count < 2;
     }
 

@@ -31,6 +31,11 @@ public class Card : MonoBehaviour
         isMatched = false;
     }
 
+    private void Start()
+    {
+        cardButton.onClick.AddListener(OnClicked);
+    }
+
     public void OnClicked()
     {
         if (GameManager.Instance.CanPlayerSelectCard() == false)
